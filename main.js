@@ -1,79 +1,90 @@
-const form = document.querySelector("#form_input");
 const input_name = document.querySelector("#input_name");
 const input_color = document.querySelector("#input_color");
 const container_square = document.querySelector("#square_container");
 
 
-const orange = document.createElement('div');
-orange.id = 'square';
-orange.value = "orange"
-orange.style.backgroundColor = orange.value;
-container_square.appendChild(orange);
 
-const blue = document.createElement('div');
-blue.id = 'square';
-blue.value = "blue"
-blue.style.backgroundColor = blue.value;
-container_square.appendChild(blue);
-
-const red = document.createElement('div');
-red.id = 'square';
-red.value = "red"
-red.style.backgroundColor = red.value;
-container_square.appendChild(red);
-
-var squares = [
+// array squares
+let squares = [
     {
-    color: orange.value ,
-    name: 'Laranja' 
+    backgroundcolor: "orange",
+    name: "laranja"
     },
     {
-    color: blue.value ,
-    name: 'Azul'
+    backgroundcolor: "blue",
+    name: "azul"
     },
     {
-    color: red.value ,
-    name: 'Vermelho'
+    backgroundcolor:"red",
+    name: "vermelho"
     }
 ];
 
+// Put the Local Storage in squares array
+let square_storage = JSON.parse(localStorage.getItem("squares_colors"));
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault()
+if (square_storage != null) {
+    
+    squares = square_storage;
+}
+
+console.log(squares);
 
 
-     if (!input_color.value) {
-        alert("please write a color");
-        return;
+// function reload the page and create the squares
+updateview();
 
-    } else if (!input_name.value) {
-        alert("please write a name");
+
+function updateview() {
+    // Clean the div square_container
+    container_square.innerHTML = "";
+
+    // Create squares in for loop
+
+    for (i = 0; i < squares.length; i++) {
+        const square = squares[i];
+
+        const square_element = document.createElement("div");
+        square_element.classList.add("square_element");
+
+        square_element.style.width = "100px";
+        square_element.style.height = "100px";
+        square_element.style.backgroundColor = square.backgroundcolor
+
+        container_square.appendChild(square_element);
+
+        
+        
+    }
+}
+ 
+// add the squares from input
+
+function addsquare(){
+
+    event.preventDefault();
+
+    if (!input_name.value) {
+        
+        alert("insert a name")
+
         return;
     }
 
-    const square_id = document.createElement("div");
-    square_id.id = "square";
-    square_id.style.backgroundColor = input_color.value;
-
-    container_square.appendChild(square_id);
-
-    let square = {
-        color: input_color.value,
-        name: input_name.value
+    const square =  {
+        backgroundcolor: input_color.value,
+        name: input_name.value,
+        with: "100px",
+        height: "100px"
     }
-
-    // adds the squares
 
     squares.push(square);
 
-    // saving to localStorage
-    localStorage.setItem("squarescolors",JSON.stringify(squares));
+    localStorage.setItem("squares_colors", JSON.stringify(squares));
 
-    // reset the form
-    form.reset(); 
-    
-    
-})
+    input_name.value = "";
 
+    updateview();
 
-    
+   
+}
