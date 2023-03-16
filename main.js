@@ -3,25 +3,23 @@ const input_name = document.querySelector("#input_name");
 const input_color = document.querySelector("#input_color");
 const container_square = document.querySelector("#square_container");
 
-var localstorage = JSON.parse(localStorage.getItem('squarescolors'));
-console.log(localstorage);
 
 const orange = document.createElement('div');
 orange.id = 'square';
 orange.value = "orange"
-orange.style.backgroundColor = "orange";
+orange.style.backgroundColor = orange.value;
 container_square.appendChild(orange);
 
 const blue = document.createElement('div');
 blue.id = 'square';
 blue.value = "blue"
-blue.style.backgroundColor = "blue";
+blue.style.backgroundColor = blue.value;
 container_square.appendChild(blue);
 
 const red = document.createElement('div');
 red.id = 'square';
 red.value = "red"
-red.style.backgroundColor = "red";
+red.style.backgroundColor = red.value;
 container_square.appendChild(red);
 
 var squares = [
@@ -39,7 +37,6 @@ var squares = [
     }
 ];
 
-container_square.append(localstorage);
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -60,7 +57,7 @@ form.addEventListener('submit', (e) => {
 
     container_square.appendChild(square_id);
 
-    const square = {
+    let square = {
         color: input_color.value,
         name: input_name.value
     }
@@ -69,25 +66,14 @@ form.addEventListener('submit', (e) => {
 
     squares.push(square);
 
-      
     // saving to localStorage
-    localStorage.setItem('squarescolors',JSON.stringify(square));
-    
-    
+    localStorage.setItem("squarescolors",JSON.stringify(squares));
 
     // reset the form
     form.reset(); 
-     
-
     
-   
-   
-    
-   
-   
-
-
-
     
 })
 
+
+    
